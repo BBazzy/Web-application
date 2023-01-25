@@ -1,0 +1,55 @@
+﻿<div style="display: flex; justify-content: space-between; align-items: center">
+    <h2>
+        <a href="/Subjects/Index/@ViewBag.Subject.CategoryId">@ViewBag.Subject.Category.Name</a>
+    </h2>
+
+    @if (ViewBag.UserId == ViewBag.Subject.UserId.ToString() || User.IsInRole("Moderator") || User.IsInRole("Administrator"))
+    {
+        <form method="post" action="/Subjects/Delete/@ViewBag.Subject.Id">
+            <button class="btn alert-danger" type="submit">Sterge subiectul</button>
+        </form>
+    }
+</div>
+
+<br />
+
+<div style="display: flex; font-size: 12px">
+    <p style="margin-right: 8px; margin-bottom: 4px; font-weight: 500">Posted by
+        <a asp-controller="Users" 
+            asp-action="Show" 
+            asp-route-id="@ViewBag.Subject.User.UserName"
+        >@ViewBag.Subject.User.UserName</a>
+    </p>
+    <p style="margin-bottom: 4px">@ViewBag.Subject.TimePosted</p>
+</div>
+<h5>@ViewBag.Subject.Title</h5>
+<p>@ViewBag.Subject.Text</p>
+
+<h4 style="margin-bottom: 15px">Comentarii</h4>
+
+@foreach(var com in ViewBag.Subject.Comments){
+    <div class="comment">
+        <div style="display: flex; font-size: 12px">
+            <p style="margin-right: 8px; margin-bottom: 4px; font-weight: 500">Posted by
+                <a asp-controller="Users" 
+                    asp-action="Show" 
+                    asp-route-id="@com.UserName"
+                >@com.UserName</a>
+            </p>
+            <p style="margin-bottom: 4px">@com.TimePosted</p>
+        </div>
+        <p>@com.Text</p>
+        @if (ViewBag.UserId == com.UserId.ToString() || User.IsInRole("Moderator") || User.IsInRole("Administrator"))
+        {
+            <div style="display: flex">
+                <a style="margin-right: 6px" class="btn alert-primary" href="/Comments/Edit/@com.Id">Modifica comentariul</a>
+                <form method="post" action="/Comments/Delete/@com.Id">
+                    <button class="btn alert-danger" type="submit">Sterge comentariul</button>
+                </form>
+            </div>
+        }
+    </div>
+}
+
+<a class="btn btn-success" href="/Comments/New/@ViewBag.Subject.Id">Adauga un comentariu</a>
+

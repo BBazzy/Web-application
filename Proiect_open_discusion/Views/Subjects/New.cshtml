@@ -1,0 +1,28 @@
+﻿@model Proiect_open_discusion.Models.Subject
+
+<h2>Subiect Nou</h2>
+
+<br />
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Subjects", method: FormMethod.Post))
+{
+    @Html.Label("Title", "Denumire subiect")
+    <br />
+    @Html.TextBox("Title", null, new { @class = "form-control"})
+    @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger"})
+    <br />
+
+    @Html.Label("Text", "Continut subiect")
+    <br />
+    @Html.TextBox("Text", null, new { @class = "form-control"})
+    @Html.ValidationMessageFor(m => m.Text, null, new { @class = "text-danger"})
+    <br />
+
+    <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"), 
+        "Selectati categoria", new {@class = "form-control"});
+    @Html.ValidationMessageFor(m => m.CategoryId, null, new {@class = "text-danger"});
+    <br />
+
+    <button class="btn btn-success" type="submit">Adauga subiect</button>
+}

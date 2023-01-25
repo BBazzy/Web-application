@@ -1,0 +1,42 @@
+﻿<div style="display: flex; flex-direction: column; align-items: center">
+<h2>Lista Categorii</h2>
+<br />
+
+<div class="categories">
+@foreach (var category in ViewBag.Categories)
+{
+    <div class="category">
+        <h4 style="margin: 10px auto">@category.Name</h4>
+        <p>Categoria are @category.Subjects.Count subiecte.</p>
+        @if(category.Subjects.Count != 0){
+            <div>
+            <p style="font-size: 14px; margin-bottom: 8px">Exemplu subiecte : </p>
+            <p style="font-weight: 500; margin-bottom: 8px"style>@category.Subjects[0].Title</p>
+            @if (category.Subjects.Count != 1){
+                <p style="font-weight: 500; margin-bottom: 8px"style>@category.Subjects[1].Title</p>
+            }
+            </div>
+        }
+        <div>
+            <hr />
+            <div style="display: flex; justify-content: space-around">
+                <a style="flex-grow: 1" class="btn alert-success buton" href="/Subjects/Index/@category.Id">Afiseaza</a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a style="flex-grow: 1" class="btn alert-primary buton" href="/Categories/Edit/@category.Id">Modifica</a>
+                    <form method="post" action="/Categories/Delete/@category.Id">
+                        <button class="btn alert-danger buton" type="submit">Sterge</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+}
+</div>
+<br />
+@if (User.IsInRole("Administrator"))
+{
+    <a class="btn btn-success" href="/Categories/New">Adauga o noua categorie</a>
+}
+<br />
+</div>

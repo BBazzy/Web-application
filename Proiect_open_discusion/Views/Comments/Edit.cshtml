@@ -1,0 +1,16 @@
+﻿@model Proiect_open_discusion.Models.Comment
+
+<h2>Modifica Comentariul</h2>
+<br />
+
+@using (Html.BeginForm(controllerName: "Comments", actionName: "Edit", method: FormMethod.Post,
+   routeValues: new { id = Model.Id }))
+{
+    @Html.Label("Text", "Continut comentariu")
+    <br />
+    @Html.TextArea("Text", null, new { @class = "form-control"})
+    @Html.ValidationMessageFor(m => m.Text, null, new { @class = "text-danger"})
+    <br />
+
+    <button class="btn btn-success" type="submit">Modifica comentariul</button>
+}

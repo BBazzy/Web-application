@@ -1,0 +1,65 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: rgb(242, 244, 245);
+}
+
+.buton{
+    margin: 0px 3px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.subject {
+    background-color: white;
+    padding: 20px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px
+}
+
+.comment {
+    background-color: white;
+    padding: 15px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px
+}
+
+.categories{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.category {
+    width: 350px;
+    height: 350px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 15px 15px 15px;
+    margin: 10px;
+    border-radius: 14px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px
+}

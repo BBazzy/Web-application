@@ -1,0 +1,85 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    
+*@
+@{
+}
+
+<div style="display: flex; align-items: center; flex-direction: column; margin: 30px 0px">
+    <h3 style="margin-bottom: 15px">@Model.UserName</h3>
+
+    @if (User.IsInRole("Administrator")){
+        @if (ViewBag.Role.Name == "User")
+        {
+            <a asp-controller="Users"
+                asp-action="GiveMod"
+                asp-route-id="@Model.UserName"
+                class="btn alert-success buton"
+            >Promoveaza userul la moderator</a>
+        }
+        else if (ViewBag.Role.Name == "Moderator")
+        {
+            <a asp-controller="Users"
+               asp-action="TakeMod"
+               asp-route-id="@Model.UserName"
+               class="btn alert-danger buton"
+            >Elimina gradul de moderator</a>
+        }
+    }
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        @if (ViewBag.Type == "Subiecte")
+        {
+            <a style="font-weight: 500" href="/Users/Show/@Model.UserName?type=Comentarii">Vezi comentariile</a>
+            <hr />
+            @foreach (var subject in Model.Subjects)
+            {
+                <div class="subject">
+                    <div style="display: flex; font-size: 12px">
+                        <p style="margin-right: 8px; margin-bottom: 4px; font-weight: 500">Posted by @subject.User.UserName</p>
+                        <p style="margin-bottom: 4px">@subject.TimePosted</p>
+                    </div>
+                    <h6>@subject.Title</h6>
+                    <p>@subject.Text</p>
+                    <div style="display: flex; margin-right: 10px">
+                        <a class="btn alert-success buton" href="/Subjects/Show/@subject.Id">Afisare subiect</a>
+                        @if (ViewBag.UserId == subject.UserId.ToString() || User.IsInRole("Moderator") || User.IsInRole("Administrator"))
+                        {
+                            <a class="btn alert-primary buton" href="/Subjects/Edit/@subject.Id">Editare subiect</a>
+                            <form method="post" action="/Subjects/Delete/@subject.Id">
+                                <button class="btn alert-danger buton" type="submit">Sterge subiectul</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            }
+        }else if(ViewBag.Type == "Comentarii"){
+            <a style="font-weight: 500" href="/Users/Show/@Model.UserName">Vezi subiectele</a>
+            <hr />
+            @foreach (var com in Model.Comments)
+            {
+                <div class="comment">
+                    <div style="display: flex; font-size: 12px">
+                        <p style="margin-right: 8px; margin-bottom: 4px; font-weight: 500">
+                            Posted by @com.UserName
+                        </p>
+                        <p style="margin-bottom: 4px">@com.TimePosted</p>
+                    </div>
+                    <p>@com.Text</p>
+                    <div style="display: flex">
+                        <a style="margin-right: 6px" class="btn alert-success buton" href="/Subjects/Show/@com.SubjectId">Afisare subiect</a>
+                        @if (ViewBag.UserId == com.UserId.ToString() || User.IsInRole("Moderator") || User.IsInRole("Administrator"))
+                        {
+                            <a style="margin-right: 6px" class="btn alert-primary" href="/Comments/Edit/@com.Id">Modifica comentariul</a>
+                            <form method="post" action="/Comments/Delete/@com.Id">
+                                <button class="btn alert-danger" type="submit">Sterge comentariul</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
